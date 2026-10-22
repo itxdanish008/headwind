@@ -1,0 +1,9 @@
+Django==6.1.2
+brotli==1.2.0
+djangorestframework==3.18.3
+flexpolyline==0.1.0
+gunicorn==26.2.0
+httpx==0.28.1
+python-dotenv==1.2.4
+timezonefinder==9.1.0
+whitenoise==6.12.0

@@ -1,0 +1,94 @@
+.place-input {
+  position: relative;
+}
+
+.place-input__field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgb(var(--bg-rgb) / 0.6);
+  border: 1px solid rgb(var(--line-rgb) / 0.14);
+  transition: border-color 0.2s ease;
+}
+
+.place-input__field:focus-within {
+  border-color: rgb(var(--accent-rgb) / 0.7);
+  box-shadow: 0 0 0 3px rgb(var(--accent-rgb) / 0.16);
+}
+
+.place-input__field[data-invalid] {
+  border-color: var(--risk-severe);
+}
+
+.place-input__icon {
+  display: flex;
+  flex: none;
+}
+
+.place-input__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.place-input__body input {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+
+.place-input__body input:focus-visible {
+  outline: none;
+}
+
+.place-input .place-input__list {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: var(--radius-control);
+  background: rgb(var(--panel-hi-rgb));
+  backdrop-filter: none;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.place-input__list[hidden] {
+  display: none;
+}
+
+.place-input__option,
+.place-input__status {
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.place-input__option {
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.place-input__option[aria-selected='true'] {
+  background: rgb(var(--accent-rgb) / 0.14);
+}
+
+.place-input__status {
+  color: var(--muted);
+}

@@ -1,0 +1,14 @@
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.brand-link__word {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}

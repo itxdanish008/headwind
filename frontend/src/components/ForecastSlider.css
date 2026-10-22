@@ -1,0 +1,237 @@
+.fslider {
+  flex: none;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px 16px;
+  width: 100%;
+  min-height: 108px;
+  padding: 12px 18px 10px;
+  border-radius: 22px;
+}
+
+.fslider__play {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--time);
+  color: var(--chip-ink);
+  cursor: pointer;
+  box-shadow: 0 0 18px -4px rgb(var(--time-rgb) / 0.6);
+}
+
+.fslider__play:hover {
+  filter: brightness(1.08);
+}
+
+.fslider__readout {
+  display: flex;
+  flex-direction: column;
+  min-width: 9.5em;
+  color: var(--time-ink);
+}
+
+.fslider__time {
+  font-size: 17px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fslider__offset {
+  font-size: 12px;
+}
+
+.fslider__track {
+  min-width: 0;
+}
+
+.fslider__note {
+  margin: 0 0 6px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+.fslider__plot {
+  position: relative;
+  height: 44px;
+}
+
+.fslider__strip {
+  position: absolute;
+  inset: 4px 0;
+  display: grid;
+  grid-template-columns: repeat(48, 1fr);
+  gap: 1px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.fslider__strip span {
+  opacity: 0.6;
+}
+
+.fslider__strip span[data-level='0'] {
+  opacity: 0.14;
+}
+
+.fslider__strip span[data-level='5'] {
+  opacity: 0.3;
+}
+
+.fslider__trip {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  border: 1.5px solid rgb(var(--text-rgb) / 0.75);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.fslider__trip-label {
+  position: absolute;
+  top: -9px;
+  left: 6px;
+  padding: 0 4px;
+  font-size: 9px;
+  white-space: nowrap;
+  color: var(--text-2);
+  background: rgb(var(--panel-rgb) / 0.92);
+  border-radius: 4px;
+}
+
+.fslider__trip[data-anchor='end'] .fslider__trip-label {
+  right: 6px;
+  left: auto;
+}
+
+.fslider__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  touch-action: pan-y;
+}
+
+.fslider__range::-webkit-slider-runnable-track {
+  height: 44px;
+  background: transparent;
+}
+
+.fslider__range::-moz-range-track {
+  height: 44px;
+  background: transparent;
+}
+
+.fslider__range::-webkit-slider-thumb {
+  width: 4px;
+  height: 36px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--time);
+  box-shadow:
+    0 0 0 5px transparent,
+    0 0 10px 1px rgb(var(--time-rgb) / 0.7);
+  appearance: none;
+}
+
+.fslider__range::-moz-range-thumb {
+  width: 4px;
+  height: 36px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--time);
+  box-shadow: 0 0 10px 1px rgb(var(--time-rgb) / 0.7);
+}
+
+.fslider__range:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.fslider__ticks {
+  display: flex;
+  white-space: nowrap;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--faint);
+}
+
+.fslider--message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.fslider__message {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.fslider__retry {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgb(var(--line-rgb) / 0.3);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fslider__retry:hover {
+  background: rgb(var(--line-rgb) / 0.08);
+}
+
+.fslider--loading {
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgb(var(--line-rgb) / 0.1) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: fslider-shimmer 1.6s linear infinite;
+}
+
+@keyframes fslider-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@media (max-width: 519px) {
+  .fslider {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 12px 14px 10px;
+  }
+
+  .fslider__readout {
+    min-width: 0;
+  }
+
+  .fslider__track {
+    grid-column: 1 / -1;
+  }
+}

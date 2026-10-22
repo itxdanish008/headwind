@@ -1,0 +1,92 @@
+.ribbon {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ribbon-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.ribbon-hint {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.ribbon-plot {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 220px;
+  border-bottom: 1px solid rgb(var(--line-rgb) / 0.2);
+  background: repeating-linear-gradient(
+    to top,
+    transparent 0 54px,
+    rgb(var(--line-rgb) / 0.08) 54px 55px
+  );
+}
+
+.ribbon-slot {
+  display: flex;
+  align-items: flex-end;
+  min-width: 0;
+  height: 100%;
+}
+
+.ribbon-bar {
+  display: block;
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: filter 0.15s ease;
+}
+
+.ribbon-slot:hover .ribbon-bar {
+  filter: brightness(1.2);
+}
+
+.ribbon-axis {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 11px;
+  color: var(--faint);
+}
+
+.ribbon-tick {
+  display: flex;
+  white-space: nowrap;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ribbon-tick:first-child {
+  align-items: flex-start;
+}
+
+.ribbon-tick:last-child {
+  align-items: flex-end;
+}
+
+.ribbon-tick:not(:first-child):not(:last-child) {
+  align-items: center;
+}
+
+.ribbon-tick-time {
+  color: var(--time-ink);
+}
+
+@media (max-width: 599px) {
+  .ribbon-plot {
+    height: 180px;
+  }
+
+  .ribbon-tick:nth-child(even) {
+    display: none;
+  }
+}

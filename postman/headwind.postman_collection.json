@@ -1,0 +1,403 @@
+{
+  "info": {
+    "name": "Headwind API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Run the folder in order. 'Plan a trip' stores its route geometry for the corridor request."
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const d = new Date(Date.now() + 24 * 3600 * 1000);",
+          "const pad = n => String(n).padStart(2, '0');",
+          "pm.collectionVariables.set('departure', `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T08:00`);"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "departure",
+      "value": ""
+    },
+    {
+      "key": "routes",
+      "value": "[]"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"ok\", () => pm.expect(pm.response.json().status).to.eql(\"ok\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Geocode suggestions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/geocode?q=chica",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "geocode"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "chica"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"has suggestions\", () => pm.expect(pm.response.json().suggestions.length).to.be.above(0));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Resolve a place",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/place?q=Denver, CO",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "place"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "Denver, CO"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"has a timezone\", () => pm.expect(pm.response.json().timezone).to.eql(\"America/Denver\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Plan a trip (Dallas to Denver)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/plan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "plan"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"Dallas, TX\",\n  \"destination\": \"Denver, CO\",\n  \"departure_at\": \"{{departure}}\",\n  \"load_lbs\": 42000,\n  \"interval_miles\": 25\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "const plan = pm.response.json();",
+              "pm.test(\"three routes\", () => pm.expect(plan.routes.length).to.eql(3));",
+              "pm.test(\"a recommendation with a reason\", () => { pm.expect(plan.recommended_route_id).to.be.a(\"string\"); pm.expect(plan.reason).to.not.be.empty; });",
+              "pm.test(\"checkpoints carry ETAs and levels\", () => { const cp = plan.routes[0].checkpoints[0]; pm.expect(cp).to.include.keys(\"eta_utc\", \"eta_local\", \"level\", \"mile\"); });",
+              "pm.collectionVariables.set(\"routes\", JSON.stringify(plan.routes.map(r => r.geometry.coordinates)));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Corridor heatmap (needs the plan request first)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/corridor",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "corridor"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"routes\": {{routes}},\n  \"load_lbs\": 42000\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "const corridor = pm.response.json();",
+              "pm.test(\"49 hourly stamps\", () => pm.expect(corridor.hours.length).to.eql(49));",
+              "pm.test(\"one level per cell and hour\", () => pm.expect(corridor.levels.length).to.eql(corridor.cells.length * 49));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Plan: cargo too heavy (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/plan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "plan"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"Dallas, TX\",\n  \"destination\": \"Denver, CO\",\n  \"departure_at\": \"{{departure}}\",\n  \"load_lbs\": 50000,\n  \"interval_miles\": 25\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 400\", () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Plan: unsupported interval (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/plan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "plan"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"Dallas, TX\",\n  \"destination\": \"Denver, CO\",\n  \"departure_at\": \"{{departure}}\",\n  \"load_lbs\": 42000,\n  \"interval_miles\": 15\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 400\", () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Plan: departure in the past (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/plan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "plan"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"Dallas, TX\",\n  \"destination\": \"Denver, CO\",\n  \"departure_at\": \"2020-01-01T08:00\",\n  \"load_lbs\": 42000,\n  \"interval_miles\": 25\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 400\", () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Plan: unknown place (404)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/plan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "plan"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"zzzqqxx nowhere\",\n  \"destination\": \"Denver, CO\",\n  \"departure_at\": \"{{departure}}\",\n  \"load_lbs\": 42000,\n  \"interval_miles\": 25\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 404\", () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Unknown API path (404, JSON)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/nope",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "nope"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 404\", () => pm.response.to.have.status(404));",
+              "pm.test(\"json body\", () => pm.expect(pm.response.json().detail).to.eql(\"Not found.\"));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

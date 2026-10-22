@@ -1,0 +1,254 @@
+.detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 22px 24px 40px;
+  color: var(--text);
+}
+
+.detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detail-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.detail-back {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgb(var(--line-rgb) / 0.14);
+  border-radius: var(--radius-control);
+  background: rgb(var(--panel-rgb) / 0.8);
+  color: var(--text);
+}
+
+.detail-title-block {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.detail-title-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-title {
+  margin: 0;
+  font-size: 28px;
+}
+
+.detail-chip {
+  padding: 5px 10px;
+  border: 1px solid rgb(var(--accent-rgb) / 0.4);
+  border-radius: 999px;
+  background: rgb(var(--accent-rgb) / 0.1);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.detail-trip {
+  font-size: 14px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.detail-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.detail-tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgb(var(--line-rgb) / 0.14);
+  border-radius: var(--radius-control);
+  color: var(--muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.detail-tab[aria-current='page'] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.detail-back:focus-visible,
+.detail-tab:focus-visible,
+.detail-home-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.detail-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.detail-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid rgb(var(--line-rgb) / 0.12);
+  border-radius: var(--radius-card);
+  background: rgb(var(--panel-rgb) / 0.8);
+}
+
+.detail-kpi dt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.detail-kpi dd {
+  margin: 0;
+}
+
+.detail-kpi dd.num {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.detail-kpi-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.detail-kpi-lead {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.detail-kpi-lead dt,
+.detail-kpi-lead .detail-kpi-sub {
+  color: var(--on-accent-muted);
+}
+
+.detail-card {
+  min-width: 0;
+  padding: 22px;
+  border-radius: 26px;
+}
+
+.detail-card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  font-stretch: 110%;
+}
+
+.detail-footer {
+  font-size: 11px;
+  color: var(--faint);
+}
+
+.detail-footer a {
+  color: var(--muted);
+}
+
+.detail-home-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text);
+}
+
+.detail-skeleton {
+  border-radius: var(--radius-card);
+  background: linear-gradient(
+    90deg,
+    rgb(var(--panel-rgb) / 0.5) 25%,
+    rgb(var(--panel-hi-rgb) / 0.7) 50%,
+    rgb(var(--panel-rgb) / 0.5) 75%
+  );
+  background-size: 200% 100%;
+  animation: detail-shimmer 1.4s linear infinite;
+}
+
+.detail-skeleton-header {
+  height: 88px;
+}
+
+.detail-skeleton-kpi {
+  height: 92px;
+}
+
+.detail-skeleton-card {
+  height: 260px;
+}
+
+@keyframes detail-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (min-width: 600px) {
+  .detail-kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .detail-kpi dd.num {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .detail-kpis {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .detail-kpi dd.num {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 599px) {
+  .detail-page {
+    padding: 16px 16px 32px;
+  }
+
+  .detail-card {
+    padding: 16px;
+  }
+
+  .detail-title {
+    font-size: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-skeleton {
+    animation: none;
+  }
+}

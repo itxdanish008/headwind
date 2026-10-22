@@ -1,0 +1,131 @@
+.ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border-radius: var(--radius-card);
+  color: var(--text);
+}
+
+.ladder__head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ladder__title {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.ladder__reason {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.ladder__table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ladder__corner,
+.ladder__criterion {
+  width: 32%;
+}
+
+.ladder__decided {
+  display: block;
+  margin-top: 2px;
+}
+
+.ladder__corner {
+  text-align: left;
+  padding: 0 0 8px;
+  font-weight: inherit;
+}
+
+.ladder__route {
+  padding: 0 8px 8px 4px;
+  text-align: right;
+}
+
+.ladder__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 1.5px solid var(--route-color);
+  color: var(--route-color);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ladder__table tbody tr {
+  border-top: 1px solid rgb(var(--line-rgb) / 0.12);
+}
+
+.ladder__criterion,
+.ladder__value {
+  padding: 9px 8px 9px 4px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.ladder__criterion {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.ladder__value {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ladder__value.is-best {
+  font-weight: 800;
+  color: var(--text);
+}
+
+.ladder__table tr.is-decisive {
+  background: rgb(var(--accent-rgb) / 0.1);
+}
+
+.ladder__table tr.is-decisive .ladder__criterion {
+  color: var(--text);
+  box-shadow: inset 3px 0 0 var(--accent);
+  border-radius: 2px 0 0 2px;
+}
+
+.ladder__criterion .ladder__decided {
+  color: var(--text);
+}
+
+.ladder__footnote {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--faint);
+}
+
+.ladder__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: var(--radius-control);
+  border: 1px solid rgb(var(--accent-rgb) / 0.45);
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ladder__link:hover {
+  background: rgb(var(--accent-rgb) / 0.1);
+}

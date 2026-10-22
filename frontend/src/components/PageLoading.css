@@ -1,0 +1,4 @@
+.page-loading {
+  min-height: 100dvh;
+  background: var(--bg);
+}

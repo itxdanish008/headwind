@@ -1,0 +1,59 @@
+.cp-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+.cp-picker__select,
+.cp-picker__step {
+  min-height: 44px;
+  border: 1px solid rgb(var(--line-rgb) / 0.2);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+}
+
+.cp-picker__select {
+  flex: 1;
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.cp-picker__select option {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.cp-picker__step {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  padding: 0;
+}
+
+.cp-picker__step path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cp-picker__step:hover:not(:disabled) {
+  background: rgb(var(--line-rgb) / 0.08);
+}
+
+.cp-picker__step:disabled {
+  color: var(--faint);
+  opacity: 0.45;
+}
+
+.cp-picker__select:focus-visible,
+.cp-picker__step:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

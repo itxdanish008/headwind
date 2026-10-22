@@ -1,0 +1,171 @@
+/* Headwind "Sodium Dusk" tokens, from the design handoff. Dark is the default.
+   *-rgb tokens are space separated: use rgb(var(--x-rgb) / 0.5). The handoff screens write
+   rgba(var(--x-rgb), 0.5); translate when porting. --r0..--r4 are aliases of the risk scale. */
+
+:root,
+.dark {
+  color-scheme: dark;
+  --bg: #0e1420;
+  --bg-rgb: 14 20 32;
+  --panel-rgb: 30 40 60;
+  --panel-hi-rgb: 42 55 82;
+  --line-rgb: 226 232 245;
+  --text: #eeeae2;
+  --text-rgb: 238 234 226;
+  --text-2: #d5d9e3;
+  --muted: #a3abbc;
+  --faint: #9ba5b8;
+  --accent: #f3ede2;
+  --accent-rgb: 243 237 226;
+  --on-accent: #0b1018;
+  --on-accent-muted: #4a5163;
+  --logo-bg: #222d45;
+  --time: #e8a54b;
+  --time-rgb: 232 165 75;
+  --time-ink: #efc98a;
+  --chip-ink: #0b1018;
+  --risk-low: #79b791;
+  --risk-moderate: #e3c15f;
+  --risk-high: #e88e4e;
+  --risk-severe: #d9535f;
+  --risk-notravel: #8e6ccb;
+  --risk-notravel-deep: #2e2347;
+  --risk-unknown: #8590a5;
+  --r0-rgb: 121 183 145;
+  --r1-rgb: 227 193 95;
+  --r2-rgb: 232 142 78;
+  --r3-rgb: 217 83 95;
+  --r0-t: #cfe6d7;
+  --r1-t: #f1e2a8;
+  --r2-t: #f5cdae;
+  --r3-t: #f2bfc3;
+  --r4-t: #ddd6fe;
+  --route-a: #9097aa;
+  --route-b: #8fa9d6;
+  --route-b-rgb: 143 169 214;
+  --sky1-rgb: 64 88 140;
+  --sky2-rgb: 40 56 100;
+  --mtn1: #1c2842;
+  --mtn2: #162036;
+  --mtn3: #111a2b;
+  --terrain1: #1b2942;
+  --terrain2: #22324f;
+  --star: #dce6f5;
+  --star-op: 1;
+  --sun-op: 0;
+  --snow: #e8eef7;
+  --road: #121a28;
+  --road-edge: #26324c;
+  --road-line: rgb(238 234 226 / 0.2);
+  --metal: #9aa3b5;
+  --heat-blend: screen;
+  --depth: 0 24px 60px -26px rgb(0 0 0 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.07);
+  --font-ui: 'Archivo Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --radius-card: 22px;
+  --radius-control: 14px;
+  --r0: var(--risk-low);
+  --r1: var(--risk-moderate);
+  --r2: var(--risk-high);
+  --r3: var(--risk-severe);
+  --r4: var(--risk-notravel);
+  --r4-deep: var(--risk-notravel-deep);
+}
+
+.light {
+  color-scheme: light;
+  --bg: #f3f0e9;
+  --bg-rgb: 243 240 233;
+  --panel-rgb: 255 255 255;
+  --panel-hi-rgb: 255 255 255;
+  --line-rgb: 30 40 60;
+  --text: #151b27;
+  --text-rgb: 21 27 39;
+  --text-2: #2f3747;
+  --muted: #555e70;
+  --faint: #5f677a;
+  --accent: #1b2436;
+  --accent-rgb: 27 36 54;
+  --on-accent: #f7f4ee;
+  --on-accent-muted: #b9bfcc;
+  --logo-bg: #1b2436;
+  --time: #d99436;
+  --time-rgb: 217 148 54;
+  --time-ink: #94560a;
+  --chip-ink: #151b27;
+  --risk-low: #6db088;
+  --risk-moderate: #ddb548;
+  --risk-high: #e3833f;
+  --risk-severe: #de616c;
+  --risk-notravel: #9880d2;
+  --risk-notravel-deep: #ece5fb;
+  --risk-unknown: #8a92a3;
+  --r0-rgb: 109 176 136;
+  --r1-rgb: 221 181 72;
+  --r2-rgb: 227 131 63;
+  --r3-rgb: 222 97 108;
+  --r0-t: #2c6847;
+  --r1-t: #765705;
+  --r2-t: #954410;
+  --r3-t: #a32336;
+  --r4-t: #4a2e8e;
+  --route-a: #666e80;
+  --route-b: #3f6db5;
+  --route-b-rgb: 63 109 181;
+  --sky1-rgb: 255 196 150;
+  --sky2-rgb: 170 196 235;
+  --mtn1: #b6c1d6;
+  --mtn2: #9fabc4;
+  --mtn3: #8896b2;
+  --terrain1: #e1e5ec;
+  --terrain2: #d5dce6;
+  --star: #ffffff;
+  --star-op: 0;
+  --sun-op: 1;
+  --snow: #ffffff;
+  --road: #2a3140;
+  --road-edge: #3b4558;
+  --road-line: rgb(255 255 255 / 0.22);
+  --heat-blend: multiply;
+  --depth: 0 18px 44px -22px rgb(21 27 39 / 0.26), 0 2px 6px -2px rgb(21 27 39 / 0.08);
+}
+
+body {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+.glass {
+  background: rgb(var(--panel-rgb) / 0.78);
+  border: 1px solid rgb(var(--line-rgb) / 0.14);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: var(--depth);
+}
+
+.notravel-hatch {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--risk-notravel) 0 3px,
+    var(--risk-notravel-deep) 3px 6px
+  );
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.display {
+  font-weight: 800;
+  font-stretch: 115%;
+  letter-spacing: -0.03em;
+}

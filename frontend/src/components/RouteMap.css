@@ -1,0 +1,67 @@
+.route-map {
+  position: absolute;
+  inset: 0;
+}
+
+.route-map .maplibregl-canvas {
+  outline: none;
+}
+
+.route-map__chip {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgb(var(--panel-rgb) / 0.9);
+  color: var(--text-2);
+  font-size: 13px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.route-map__spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgb(var(--line-rgb) / 0.25);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: route-map-spin 0.8s linear infinite;
+}
+
+.route-map__hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--faint);
+  font-size: 15px;
+  pointer-events: none;
+  text-align: center;
+  padding: 0 16px;
+}
+
+@keyframes route-map-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-map__spinner {
+    animation-duration: 2.4s;
+  }
+}
+
+@media (pointer: coarse), (max-width: 767px) {
+  .route-map .maplibregl-ctrl-zoom-in,
+  .route-map .maplibregl-ctrl-zoom-out {
+    width: 44px;
+    height: 44px;
+  }
+}

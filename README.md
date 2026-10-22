@@ -52,6 +52,18 @@ fly deploy
 
 It runs one small always-on machine, so the in-memory weather and route cache survives between requests. I have not deployed it from this machine, because that needs an account.
 
+### Deploying to Vercel
+
+The root `vercel.json` defines a Django backend service and a Vite frontend service. Import this repository from its root directory in Vercel. The frontend is public at `/`; the backend is public under `/api/*`, which matches the API paths used by the frontend and Django.
+
+Set these environment variables in the Vercel project before deploying:
+
+- `SECRET_KEY`: a unique production secret.
+- `HERE_API_KEY`: your HERE API key, required for place search and route planning.
+- `ALLOWED_HOSTS`: `.vercel.app` and your custom domain if you add one.
+
+The frontend calls the backend from the browser through the shared `/api/*` path. The services do not make server-to-server calls, so no service binding is needed.
+
 ## Checks
 
 ```
